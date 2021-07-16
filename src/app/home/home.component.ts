@@ -1,4 +1,4 @@
-import {Component, Inject, OnInit} from '@angular/core';
+import {Component, Inject} from '@angular/core';
 import {Product} from '../model/product';
 import {ProductService} from '../services/product.service';
 import {CustomerService} from '../services/customer.service';

@@ -4,8 +4,10 @@
     <div class="caption">
       <h3>{{data.title | uppercase }} - {{data.price | currency:'EUR'}}</h3>
       <p>{{data.description}}</p>
+      <p> {{ data.stock }} </p>
       <p>
         <button class="btn btn-primary" (click)="addToBasketClick()">Add to Cart</button>
+          <button class="btn btn-primary" [routerLink]="['/product', data.id]">en savoir plus</button>
       </p>
     </div>
   </div>
