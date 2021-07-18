@@ -1,4 +1,5 @@
 import { Component, EventEmitter, inject, Input, OnInit, Output} from '@angular/core';
+
 import { Product } from '../model/product';
 import {CustomerService} from '../services/customer.service';
 import {ActivatedRoute} from '@angular/router';
@@ -11,20 +12,23 @@ import { Params } from '@angular/router';
   styleUrls: ['./product-details.component.css']
 })
 export class ProductDetailsComponent implements OnInit {
-
-  oneproduct: Product ;
+  products: Product[] = [];
+  uproduct: Product ;
   constructor(
     private productService: ProductService,
     private customerService: CustomerService,
     private route: ActivatedRoute,
+    
   )
-  {}
+  { productService.getProducts().subscribe(products => {
+    this.products = products;
+  });}
 
   ngOnInit(){
     this.route.params.subscribe((params: Params):void=>{
     const id = (params.id);
     this.productService.getProduct(id).subscribe(products => {
-      this.oneproduct = products;})
+      this.uproduct = products;})
   })}
 
 isTheLast(product: Product): boolean {
@@ -35,4 +39,8 @@ updatePrice(event: Product): void {
   this.customerService.addProduct(event);
   this.productService.decreaseStock(event);
 }
+  isAvailable(product: Product): boolean {
+    return this.productService.isAvailable(product);
+  }
+  
 }

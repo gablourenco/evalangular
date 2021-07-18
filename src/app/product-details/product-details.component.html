@@ -1,15 +1,20 @@
 <div class="col-md-3 col-sm-6 oneproduct-item">
     <div class="thumbnail">
-      <img [src]="oneproduct?.photo" alt="">
+      <img [src]="uproduct?.photo" alt="">
       <div class="caption">
 
-        <h3>{{oneproduct?.title | uppercase }} - {{oneproduct?.price | currency:'EUR'}}</h3>
-        <p>{{oneproduct?.description}}</p>
-        <p>{{ oneproduct?.stock }}</p>
-        
-          <button class="btn btn-primary" (addToBasket)="updatePrice(oneproduct)" >Add to Cart</button>
-        
+        <h3>{{uproduct?.title | uppercase }} - {{uproduct?.price | currency:'EUR'}}</h3>
+        <p>{{uproduct?.description}}</p>
+        <p>{{ uproduct?.stock }}</p>
+        <span *ngIf="uproduct && isTheLast(uproduct)" [ngClass]="{last: isTheLast(uproduct)}">il ne reste plus qu'un stock</span>
+          <button class="btn btn-primary" (click)="updatePrice(uproduct)" >Add to Cart</button>
       </div>
     </div>
   </div>
-  
+
+  <div class="row text-center">
+    <ng-container *ngFor="let product of products | sort:sortKey">
+      <app-product *ngIf="uproduct.title !== product?.title" [data]="product"
+                   (addToBasket)="updatePrice($event)"></app-product>
+    </ng-container>
+  </div>
